@@ -1,0 +1,18 @@
+% \pgfplotsset{compat=1.18}
+\begin{tikzpicture}
+    \begin{axis}[xlabel=$x$,ylabel=$y$,zlabel=$z$]
+        \node(O) at (0,7,7){$O$};
+        \node(A) at (0,60,50){$A$};
+        \node(B) at (420,120,45){$B$};
+        \node(P) at (240,120,45){$P$};
+        \node(Q) at (240,120,80){$P'$};
+        \addplot3 coordinates {(0,0,0) (0,0.5,0.5)};
+        \addplot3 coordinates {(0,0,0) (0.5,1,0.5) };
+        \addplot3 coordinates {(0,0,0) (0.25,1,1) };
+        \addplot3 coordinates {(0,0,0) (0.25,1,0.5) };
+        \addplot3 [surf] coordinates {
+        (0,0,0) (0,1,1) (0.5,1,0.5) 
+        };
+        \addplot3 coordinates {(0.25,1,1) (0.25,1,0.5)};
+    \end{axis}
+\end{tikzpicture}  

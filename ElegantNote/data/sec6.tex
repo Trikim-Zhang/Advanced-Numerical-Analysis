@@ -1,0 +1,479 @@
+% !TeX program = xelatex*2
+% !TeX root = ../elegantnote.tex
+\section{方程求根}
+\subsection{非线性方程求根的基本概念}
+\begin{definition}[单根区间、多根区间、有根区间]
+    如果方程$f(x) = 0$在区间$[a,b]$上只有一个根、多个跟、至少有一个根，称$[a,b]$为单根区间、多根区间、有根区间。
+\end{definition}
+\subsection{跟的搜索与二分法}
+\begin{example}
+    求方程$ f(x)=x^3-11.1x^2 +38.8x-41.77=0$的有根区间。
+    \begin{solution}
+        方程的三个有根区间为$[2.3]$$[3,4]$和$[5,6]$
+    \end{solution}
+\end{example}
+\begin{note}
+    逐步搜素法：
+    \begin{itemize}
+        \item 搜索步长的选取是逐步搜索法的关键，当步长缩小时，搜索步数增多，计算量增大
+        \item 如果精度要求比较高，单用逐步搜索法不合算
+    \end{itemize}
+\end{note}
+\begin{note}
+    二分法:
+    假设$a_0 = a,b_0 = b$
+    \begin{itemize}
+        \item 取$x_0 = \dfrac{a_0+b_0}{2}$，将区间$[a_0,b_0]$分为两半
+    
+        若$f(a_0)f(x_0)>0$，则取$a_1 = x_0,b_1 = b_0$，否则取$a_1 = a_0,b_1 = x_0$
+        \item 取$x_1 = \dfrac{a_1+b_1}{2}$，将区间$[a_1,b_1]$分为两半
+    
+        若$f(a_1)f(x_1)>0$，则取$a_2 = x_1,b_2 = b_1$，否则取$a_2 = a_1,b_2 = x_1$
+    \end{itemize}
+\end{note}
+\subsection{不动点迭代法}
+\begin{definition}[不动点迭代法]
+    将非线性方程$f(x) = 0$化为一个同解方程
+    \[
+        x = \varphi(x)
+    \]
+    任取一个初值$x_0$代入上式右端，得到
+    \[
+        x_1 = \varphi(x_0),x_2 = \varphi(x_1),\cdots,x_{k+1} = \varphi(x_k)
+    \]
+    求解非线性方程$f(x)= 0$的不动点选代法。
+
+    如果存在一点$x^*$，使得$\lim\limits_{k\to \infty}x_k= x^*$，则称选代法收敛,否则称为发散。
+\end{definition}
+\begin{definition}[压缩映射]
+    \[
+        |x_{k}-x^*| = |\varphi(x_{k-1})-\varphi(x^*)|\leqslant L|x_{k-1}-x^*|(0<L<1)
+    \]
+    称为压缩映射。
+\end{definition}
+\begin{theorem}
+    设迭代函数且满足$\varphi(x)\in C[a,b]$
+    且满足
+    \begin{enumerate}
+        \item $\forall x\in[a,b]$，有$\varphi(x)\in[a,b]$
+        \item 存在$L\in (0,1)$，使得$\forall x,y \in[a,b]$
+        \[
+            |\varphi(x)-\varphi(y)|\leqslant L|x-y|
+        \]
+    \end{enumerate}
+    则
+    \begin{enumerate}
+        \item $\varphi(x)$在区间$[a,b]$内存在唯一不动点
+        \item 对于任意初值$x_0\in [a,b]$,由迭代法生成的迭代序列$\left\{ x_k \right\}$均收敛于$x^*$
+        \item $\mid x_{k}-x^{*}\mid\leq\frac{L}{1-L}\mid x_{k}-x_{k-1}\mid$
+        \item $\mid x_{k}-x^{*}\mid\leq\frac{L^{k}}{1-L}\mid x_{1}-x_{0}\mid$
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    证明1：
+    令$F(x) = \varphi(x)-x$，则$F(x)\in C[a,b]$且
+    \[
+        F(a) = \varphi(a)-a\geqslant 0,F(b) = \varphi(b)-b\leqslant 0,
+    \]
+    有闭区间连续函数的性质知道，$\exists x^*\in [a,b]$使得$F(x^*) =\varphi(x^*)-x^*$
+
+    设$y^*$也是$\varphi(x)$的不动点，则
+    \[
+        0<|y^*-x^*| = |\varphi(y^*)-\varphi(x^*)|\leqslant L|y^*-x^*|
+    \]矛盾！
+
+    证明2：
+    \[
+        0<|x_k-x^*| = |\varphi(x_{k-1})-\varphi(x^{*})|\leqslant\cdots\leqslant L^k|x_0-x^*|
+    \]
+
+    证明3：
+    \[
+        |x_k-x^*|\leqslant L|x_{k-1}-x^*|\leqslant L\left( |x_{k-1}-x^k| + |x_{k}-x^*| \right)
+    \]
+    \[
+        \Rightarrow |x_k-x^*|\leqslant \dfrac{L}{1-L}|x_k-x_{k-1}|
+    \]
+
+    证明4：
+    \[
+        |x_k-x^*|\leqslant \dfrac{L}{1-L}|\varphi(x_{k-1})-\varphi(x_{k-2})|\leqslant \cdots \leqslant \dfrac{L^k}{1-L}|x_1-x_0|
+    \]
+    \[
+        \Rightarrow |x_k-x^*|\leqslant \dfrac{L^k}{1-L}|x_1-x_0|
+    \]
+    证毕！
+\end{proof}
+\begin{note}
+    利用拉格朗日中值定理
+    \[
+        |\varphi(x)-\varphi(y)| = |\varphi'(\xi)||x-y|\leqslant \underbrace{\max\limits_{x\in[a,b]}|\varphi(x)'|}|x-y|  
+    \]
+\end{note}
+\begin{example}
+    构造不同的迭代法求$x^2 - 3 = 0$根$x^* = 3$.要求计算结果精确到小数点后第7位
+    \begin{itemize}
+        \item 迭代格式1：$x_{k+1} = \dfrac{3}{x_k}$
+        \item 迭代格式2：$x_{k+1} = x_{k}-\dfrac{1}{4}(x^2-3)$
+        \item 迭代格式3：$x_{k+1} = \dfrac{1}{2}\left( x_k + \dfrac{3}{x_k} \right)$
+    \end{itemize}
+    上述迭代格式中收敛的是\sol{2,3}，收敛最快的是\sol{3}
+    \begin{solution}
+        \[
+            \begin{array}{lr}
+                |\varphi'_{1}(x)| = \dfrac{3}{x^2} & |\varphi'_{1}(\sqrt{3})| = 1\\
+                |\varphi'_{2}(x)| = |1-\dfrac{x}{2}| & |\varphi'_{2}(\sqrt{3})| = 1-\dfrac{\sqrt{3}}{2}\\
+                |\varphi'_{3}(x)| = \dfrac{1}{2}\bigg|1-\dfrac{3}{x^2}\bigg| & |\varphi'_{3}(\sqrt{3})| = 0
+            \end{array}
+        \]
+        \[
+            |\varphi'_{3}(x)| = \dfrac{1}{2}\bigg|1-\dfrac{3}{x^2}\bigg| ,\, |\varphi'_{3}(\sqrt{3})| = 0 ,\,|\varphi''_{3}(\sqrt{3})| =\dfrac{6}{(\sqrt{3})^3} \neq 0
+        \]
+        \colorbox{red}{迭代格式3是二阶收敛的}
+    \end{solution}
+\end{example}
+\begin{definition}[收敛]
+    若存在实数$p\geq 1$和常数$c>0$满足
+    \[
+        \lim\limits_{k\to \infty} \dfrac{\varepsilon_{k+1}}{\varepsilon_{k}^p} = c
+    \]
+    则称迭代法$p$阶收敛，当$p = 1$时称为线性收敛，$p > 1$时称为超线性收敛，$p = 2$时称为平方收敛。
+
+    显然，$p$越大，收敛速度也就越快。
+\end{definition}
+\begin{note}
+    如何确定$p$，从而确定收敛阶呢？
+    \[
+        \begin{aligned}
+            \varphi(x)&=\varphi(x^{*})+\varphi^{\prime}(x^{*})(x-x^{*})+\frac{\varphi^{\prime\prime}(x^{*})}{2!}(x-x^{*})^{2}+\cdots\\
+            &+\frac{\varphi^{(p-1)}(x^{*})}{(p-1)!}(x-x^{*})^{p-1}+\frac{\varphi^{(p)}(x^{*})}{p!}(x-x^{*})^{p}+\cdots
+        \end{aligned}
+    \]
+    如果$\varphi^{\prime}(x^{*})=\varphi^{\prime\prime}(x^{*})=\cdots=\varphi^{(p-1)}(x^{*})=0$，从而$\varphi^{(p)}(x^{*})\neq 0$
+    \[
+        \begin{gathered}
+            \varphi(x)=\varphi(x^{\star})+\frac{\varphi^{(p)}(x^{\star})}{p!}\big(x-x^{\star}\big)^{p}+\cdots  \\
+            x_{k+1}=\varphi\big(x_{k}\big)=\varphi\big(x^{\star}\big)+\frac{\varphi^{(p)}\big(x^{\star}\big)}{p!}\big(x_{k}-x^{\star}\big)^{p}+\cdots  \\
+            {\frac{\left|x_{k+1}-x^{*}\right|}{\left|x_{k}-x^{*}\right|^{p}}}=\left|{\frac{\varphi^{(p)}(x^{*})}{p!}}+{\frac{\varphi^{(p+1)}(x^{*})}{(p+1)!}}(x_{k}-x^{*})+\cdots\right|\to\left|{\frac{\varphi^{(p)}(x^{*})}{p!}}\right|,(k\to\infty) 
+        \end{gathered}
+    \]
+    即迭代法$x_{k+1}=\varphi(x_{k})$的收敛阶是$p$
+\end{note}
+\begin{theorem}
+    如果迭代法迭代函数$\varphi(x)$ 在根 $x^*$附近满足
+    \begin{enumerate}
+        \item $\varphi(x)$存在$p$阶导数且连续；
+        \item $\varphi^{\prime}(x^{*})=\varphi^{\prime\prime}(x^{*})=\cdots=\varphi^{(p-1)}(x^{*})=0$,而$\varphi^{(p)}(x^{*})\neq 0$
+    \end{enumerate}
+\end{theorem}
+\begin{note}
+    Aitken加速方法
+
+设$x_0$是根$x^*$的某个近似值，用迭代公式校正一次得，
+\[
+    x_1=\varphi(x_0)   
+\]
+\[
+    x_1-x^*=\varphi(x_0)-\varphi(x^*)=\varphi^{\prime}(\xi)(x_0-x^*)
+\]
+若将$x_1$再迭代一次得，
+\[
+    \begin{array}{c}
+        x_2=\varphi(x_1)\\
+        x_2-x^*=\varphi^{\prime}(\eta)(x_1-x^*)\\
+        \dfrac{x_1-x^*}{x_2-x^*}\approx\dfrac{x_0-x^*}{x_1-x^*}\Rightarrow x^*\approx\dfrac{x_0x_2-x_1^2}{x_2-2x_1+x_0}=x_0-\dfrac{(x_1-x_0)^2}{x_2-2x_1+x_0}
+    \end{array}
+\]
+记
+\[
+    \overline{x}_{k+1}=x_{k}-\frac{(x_{k+1}-x_{k})^{2}}{x_{k+2}-2x_{k+1}+x_{k}}
+\]
+可以证明,
+\[
+    \lim_{k\to\infty}\frac{\overline{x}_{k+1}-x^{*}}{x_{k}-x^{*}}=0
+\]
+\end{note}
+\begin{definition}[Aitken迭代法]
+    假设$\{x_k\}$是由不动点迭代得到的序列，
+    \[
+       \left\{
+        \begin{array}{ll}
+            y_k=\varphi(x_k),z_k=\varphi(y_k), & \\
+             &(k=0,1,2,\cdots)\\
+            x_{k+1}=x_k-\dfrac{(y_k-x_k)^2}{z_k-2y_k+x_k} &
+        \end{array}
+    \right.
+    \]
+    称上述公式为Aitken迭代法。
+
+    其中，相当于将原来的迭代改为另一种不动点迭代，
+    \[
+        x_{k+1}=\psi(x_k)
+    \]
+    \[
+        \colorbox{cyan!50}{$\psi(x)=x-\dfrac{[\varphi(x)-x]^{2}}{\varphi(\varphi(x))-2\varphi(x)+x}$}
+    \]
+\end{definition}
+\begin{example}
+    送代格式l：$x_{k+ 1}= \dfrac{3}{x_k}$, $k= 0,1,\cdots$\Stars{5}{}
+    \begin{solution}
+        Aitken加速后：
+        \[
+            \begin{array}{c}
+                    x_{k+ 1}= \dfrac {x_k^2+ 3}{2x_k}, k= 0,1\cdots\\
+                    \psi'(x)=\dfrac{1}{2}-\dfrac{3}{2x^2},\, \psi'(\sqrt{3})=0\\
+                    \psi''(x)=\dfrac{3}{x^3},\,\psi''(\sqrt{3})=\dfrac{1}{\sqrt{3}}\neq 0.
+            \end{array}
+        \]
+    \end{solution}
+\end{example}
+\subsection{Newton迭代法}
+\begin{definition}[Newton迭代法公式]
+    采用Aitken方法加速$f(x)=0$的迭代法：令$\varphi(x) = x+f(x)$，设$L = \varphi'(x) = 1+f'(x)$
+    \[
+        \begin{gathered}
+            x_{k+1}=x_k+f(x_k),\quad  \bar{x}_{k+1}=x_k+f(x_k)\\
+            x_{k+1}=\bar{x}_{k+1}+\frac{L}{1-L}(\bar{x}_{k+1}-x_k)
+        \end{gathered}
+    \]
+    记$M=L-1$,则$x_k+1=x_k-\dfrac{f(x_k)}M$
+    \[
+        \colorbox{red!30}{$x_{k+1}=x_k-\dfrac{f(x_k)}{f'(x_k)},\,k=0,1,\cdots$}    
+    \]
+    \colorbox{red!30}{称为解方程$f(x)= 0$的Newton迭代法。}
+\end{definition}
+\begin{note}
+    Newton迭代法几何解释：\colorbox{yellow!50}{Newton迭代法也称为切线法}
+    \[
+        f(x)\approx f(x_k)+f^{\prime}(x_k)(x-x_k)
+    \]
+    切线方程
+    \[
+        f(x_k)+f^{\prime}(x_k)(x-x_k)=0 \Rightarrow x_{k+1}=x_k-\frac{f(x_k)}{f'(x_k)}  
+    \]
+\end{note}
+\begin{note}
+    收敛性问题
+
+    \begin{itemize}
+        \item 若$x^*$是$f(x)=0$的一个单根，则$\varphi^\prime(x^*)=0$,即Newton法在附近是平方收敛的.
+        \[
+            \varphi'(x) =1- \dfrac{[f'(x)]^2-f(x)f''(x)}{[f'(x)]^2} = \dfrac{f(x)f''(x)}{[f'(x)]^2},\,\varphi'(x^*) = 0
+        \]
+        \item 若$x^*$是$f(x)=0$的$m(m\geq 2)$重根，则Newton法
+        仅为线性收敛.
+
+        有$f(x^*) = f'(x^*) = \cdots = f^{(m-1)}(x^*) = 0$，则
+        \[
+            \begin{aligned}
+                x_{k+1}-x^* &= x_{k}-x^*-\dfrac{f(x_k)}{f'(x_k)}\\
+                &=x_{k}-x^*-\dfrac{f^{(m)}(x^*)\dfrac{(x_k-x^*)^m}{m!}+o(x_k-x^*)^{m+1}}{f^{(m)}(x^*)\dfrac{(x_k-x^*)^{(m-1)}}{(m-1)!}+o(x_k-x^*)^{m-1}}\\
+                &=x_{k}-x^*-\dfrac{1}{m}\dfrac{f^{(m)}(x^*){(x_k-x^*)^m}+o(x_k-x^*)}{f^{(m)}(x^*)+o(1)}\\
+            \end{aligned}
+        \]
+        有
+        \[
+            \dfrac{x_{k+1}-x^*}{x_k-x^*} = 1-\dfrac{1}{m}\quad (k\to \infty)
+        \]
+        \item 改进$\varphi(x) = x-m\dfrac{f(x)}{f'(x)}$
+        设$f(x) = (x-x^*)^mg(x),\,g(x^*)\neq 0$
+        \[
+            \begin{aligned}
+                \varphi(x)
+                &=x-m\frac{f(x)}{f'(x)} = x-m\dfrac{(x-x^*)^mg(x)}{m(x-x^*)^{m-1}g(x)+(x-x^*)^mg'(x)}\\
+                &=x-m\dfrac{(x-x^*)g(x)}{mg(x)+(x-x^*)g'(x)}
+            \end{aligned}
+        \]
+        求导
+        \[
+            \begin{aligned}
+                \varphi'(x)
+                &=1-m\dfrac{g(x)[mg(x)+(x-x^*)g'(x)]-(x-x^*)g(x)[\cdots]}{[mg(x)+(x-x^*)g'(x)]^2}\\
+                \varphi'(x^*)
+                &=1-m\dfrac{g(x^*)mg(x^*)}{[mg(x^*)]^2} = 0\\
+            \end{aligned}
+        \]
+        % \[
+        %     \begin{aligned}
+        %         \varphi'(x)&=1-m\left\{ 1-\dfrac{f(x)f''(x)}{[f(x)]^2} \right\}\\
+        %         &=1-m+m\dfrac{f(x)f''(x)}{[f(x)]^2}
+        %     \end{aligned}
+        % \]
+        \item 或者改进，记$\mu(x)=\dfrac{f(x)}{f^{\prime}(x)}$,则可对$\mu(x)$应用Newton法：
+        \[
+            \varphi(x) = x-\dfrac{\mu(x)}{\mu'(x)}
+        \]
+        \[
+            \colorbox{cyan!50}{$\varphi(x)=x-\dfrac{f(x)f'(x)}{\left[f'(x)\right]^2-f(x)f''(x)}$}
+        \]
+    \end{itemize}
+\end{note}
+\begin{example}
+    构造一个二阶收敛的格式计算方程\Stars{3}{}
+    \[
+        x^{3}+x^{2}-3x-3=0
+    \]
+    的二重根$x = \sqrt{3}$
+    \begin{solution}
+        \[
+            \begin{array}{l}
+                f(x) = x^{3}+x^{2}-3x-3\\
+                f'(x) = 3x^{2}+2x-3\\
+                f''(x) = 6x+2
+            \end{array}
+        \]
+        \[
+            x_{k+1} = \dfrac{(x_{k}^{3}+x_{k}^{2}-3x_{k}-3)(3x_{k}^{2}+2x_{k}-3)}{(3x_{k}^{2}+2x_{k}-3)^{2}-(x_{k}^{3}+x_{k}^{2}-3x_{k}-3)(6x_{k}+2)}
+        \]
+    \end{solution}
+\end{example}
+\begin{note}
+    牛顿下山法
+
+    如果在构造迭代法时加入要求：$|f(x_{k+1})|<|f(x_k)|$，因此考虑引入一因子$\lambda$,建立迭代法
+    \[
+        x_{k+1}\:=\:x_{k}\:-\:\lambda\:\frac{f(x_{k})}{f^{\prime}(x_{k})}
+    \]
+    在迭代时，选择一个 $\lambda$,使得
+    \[
+        \mid f(x_{k+1})\mid<\mid f(x_{k})\mid 
+    \]
+    这种方法称为Newton下山法，$\lambda$称为下山因子。$\lambda$的选取方式  按$\lambda=1,\frac12,\frac1{2^2},\frac1{2^3},\cdots$的顺序，直到$\mid f(x_{k+1})\mid<\mid f(x_k)\mid$成立为止。
+\end{note}
+\subsection{非线性方程组的解法}
+\[
+    \begin{cases}
+        f_1(x_1,x_2,\cdots,x_n) = 0\\
+        \cdots\\
+        f_n(x_1,x_2,\cdots,x_n) = 0\\
+    \end{cases},\,
+    \boldsymbol{x} = \begin{pmatrix}
+        x_1\\x_2\\\cdots\\x_n
+    \end{pmatrix},\,
+    \boldsymbol{F}(\boldsymbol{x}) = \begin{pmatrix}
+        f_1(\boldsymbol{x})\\f_{2}(\boldsymbol{x})\\\cdots f_{n}(\boldsymbol{x})
+    \end{pmatrix}
+\]
+向量值函数$F:D\subset\mathbb{R}^n\to\mathbb{R}^n,\quad \boldsymbol{F}(\boldsymbol{x}^*)=0,\, \boldsymbol{x}^*\in D$
+\begin{example}
+    判断下列说法是否正确，正确请填“T”，错误请填“F”\Stars{2}{}
+    \begin{itemize}
+        \item 非线性方程组的解通常不唯一. \sol{T}
+        \item 二分法可以推广到多维方程组的求解.\sol{F}
+    \end{itemize}
+\end{example}
+给定向量值函数$\boldsymbol{F}:D\subset\mathbb{R}^n\to\mathbb{R}^n$,求$\boldsymbol{x}^*\in D$,
+使得
+\[
+    \boldsymbol{F}(\boldsymbol{x}^*)=0
+\]
+迭代求解需要讨论的几个问题
+\begin{itemize}
+    \item 迭代序列的适定性；
+    \item 迭代序列的收敛性；
+    \item 迭代序列的收敛速度与效率。
+\end{itemize}
+\begin{example}
+    判断下列说法是否正确，正确请填“T”,错误请，填“F”
+
+    对于求解非线性方程组的不动点迭代$\boldsymbol{x}^{k+1}=\boldsymbol{G}( \boldsymbol{x}^{k}) $, 若$ \boldsymbol{x}^{* }$为不动点且$\rho(\boldsymbol{G}'( \boldsymbol{x}^{k}))<1$,则对任意初值$\boldsymbol{x}^{0}$,迭代序列均收敛.\sol{F}
+\end{example}
+\begin{note}
+    Newton法及其变形
+    \[
+        \begin{array}{l}
+            F{:}D\subset\mathbb{R}^n\to\mathbb{R}^n,\quad F(x)=0
+            F(x)\approx F(x^k)+F'(x^k)(x-x^k)=0\\
+            x^{k+1}=x^k-[F'(x^k)]^{-1}F(x^k)\quad(k=0,1,\cdots)\\
+        \end{array}
+    \]
+    Newton 迭代法
+    \[
+        \begin{cases}x^{k+1}=x^k+\Delta x^k\\F'(x^k)\Delta x^k=-F(x^k)&(k=0,1,\cdots)\end{cases}
+    \]
+\end{note}
+\begin{example}
+    判断下列说法是否正确，正确请填“T”，错误请填“F”.\Stars{3}{}
+    
+    Newton迭代法是不动点迭代的一个特例.\sol{T}
+\end{example}
+\begin{note}
+    简化的Newton 迭代法(Simplified Newton iterative method)
+    \[
+        x^{k+1}=x^k-BF(x^k)\quad(k=0,1,\cdots),\quad B=[F'(x^0)]^{-1}
+    \]
+\end{note}
+\begin{example}
+    判断下列说法是否正确，正确请填“T”，错误请填“F”\Stars{3}{}
+    
+    简化Newton迭代法是不动点迭代的一个特例\sol{T}
+\end{example}
+\begin{example}
+    练习\Stars{5}{}
+    \begin{enumerate}
+        \item 设权函数$\rho(x)=1+x^2$,区间为[-1,1],试求首项系数为1的正交多项式$\varphi_n(x),n=0,1,2,3.$
+        \begin{solution}
+            \[
+                \varphi_0(x)  = 1   
+            \]
+            \[
+                \begin{aligned}
+                    \varphi_1(x) &= x-\dfrac{\left( x,1 \right)}{\left( 1,1 \right)}\cdot 1 \\
+                    &=x-\dfrac{\int_{-1}^{1}(1+x^2)x\cdot 1\diff x}{\int_{-1}^{1}(1+x^2)1\cdot 1\diff x} \cdot 1 & = x 
+                \end{aligned}
+            \]
+            \[
+                \begin{aligned}
+                    \varphi_2(x) &= x^2-\dfrac{\left( x^2,1 \right)}{\left( 1,1 \right)}\cdot 1 - \dfrac{\left( x^2,x \right)}{\left( x,x \right)}\cdot x \\
+                    &=x^2-\dfrac{\int_{-1}^{1}(1+x^2)x^2\cdot 1\diff x}{\int_{-1}^{1}(1+x^2)1\cdot 1\diff x} \cdot 1 -\dfrac{\int_{-1}^{1}(1+x^2)x^2\cdot x\diff x}{\int_{-1}^{1}(1+x^2)x\cdot x\diff x} \cdot x  \\
+                    & = x^2-\dfrac{2}{5}
+                \end{aligned}
+            \]
+            \[
+                \begin{aligned}
+                    \varphi_3(x) &= x^3-\dfrac{\left( x^3,1 \right)}{\left( 1,1 \right)}\cdot 1 - \dfrac{\left( x^3,x \right)}{\left( x,x \right)}\cdot x - \dfrac{\left( x^3,x^2 \right)}{\left( x^2,x^2 \right)}\cdot x  \\
+                    &=x^3-\dfrac{\int_{-1}^{1}(1+x^2)x^3\cdot 1\diff x}{\int_{-1}^{1}(1+x^2)1\cdot 1\diff x} \cdot 1 -\dfrac{\int_{-1}^{1}(1+x^2)x^3\cdot x\diff x}{\int_{-1}^{1}(1+x^2)x\cdot x\diff x} \cdot x - \dfrac{\int_{-1}^{1}(1+x^2)x^3\cdot x^2\diff x}{\int_{-1}^{1}(1+x^2)x^2\cdot x^2\diff x} \cdot x^2 \\
+                    & = x^3-\dfrac{9}{14}x
+                \end{aligned}
+            \]
+        \end{solution}
+        \item $\boldsymbol{A}\in \mathbb{R}^{n\times n}$为对称正定阵，经一步顺序Gauss消元后$\boldsymbol{A}$约化为$\begin{bmatrix} a_{11}& \boldsymbol{a}_1^{\mathrm{T}}\\ 0& \boldsymbol{A}_2\end{bmatrix}$, 证明$\boldsymbol{A}_2$也是对称正定阵  
+        \begin{proof}
+            可以设$\boldsymbol{A}$为
+            \[
+                \boldsymbol{A} = 
+                \begin{bmatrix}
+                    a_{11} & \boldsymbol{a}_1^{\mathrm{T}}\\
+                    \boldsymbol{a}_1 & \boldsymbol{A}'_2
+                \end{bmatrix}
+            \]
+            其中$\boldsymbol{A}'_2$为对称正定阵。
+
+            根据Gauss消元的性质，得到
+            \[
+                \boldsymbol{A}_2 = \boldsymbol{A}'_2-\dfrac{1}{a_{11}}\begin{bmatrix}
+                    a_{21}\boldsymbol{a}_{1}^{\mathrm{T}}\\a_{31}\boldsymbol{a}_{1}^{\mathrm{T}}\\\ddots\\a_{n1}\boldsymbol{a}_{1}^{\mathrm{T}}
+                \end{bmatrix}
+            \]
+            所以，有
+            \[
+                \begin{aligned}
+                    \boldsymbol{A}_2^{\mathrm{T}} &= \boldsymbol{A}_2^{'\mathrm{T}}-\dfrac{1}{a_{11}}\begin{bmatrix}
+                        a_{21}\boldsymbol{a}_1 & a_{31}\boldsymbol{a}_1 \cdots & a_{n1}\boldsymbol{a}_1
+                    \end{bmatrix}\\
+                    &=\boldsymbol{A}'_2-\dfrac{1}{a_{11}}\begin{bmatrix}
+                        a_{21}\boldsymbol{a}_{1}^{\mathrm{T}}\\a_{31}\boldsymbol{a}_{1}^{\mathrm{T}}\\\cdots\\a_{n1}\boldsymbol{a}_{1}^{\mathrm{T}}
+                    \end{bmatrix}
+                \end{aligned}
+            \] 
+        \end{proof}
+        \item $G(x) = \dfrac{1}{3}x + 3$,证 明 $G$ 在$[0,1]$上是压缩的，但没有不动点
+        \begin{proof}
+            因为$|G'(x)| = \dfrac{1}{3}<1$，故而$G$ 在$[0,1]$上是压缩的.
+
+            接下开证明没有不动点，令$G(x) = x$，解得$x = -\dfrac{9}{2}\notin [0,1]$。
+            
+            综上所述， $G(x) = \dfrac{1}{3}x+ 3$,证 明 $G$ 在$[0,1]$上是压缩的，但没有不动点。证毕！
+        \end{proof}
+    \end{enumerate}
+\end{example}

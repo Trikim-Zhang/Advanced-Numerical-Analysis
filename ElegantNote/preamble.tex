@@ -1,0 +1,79 @@
+\usepackage{array}
+\usepackage{bigstrut}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{colortbl}
+\usepackage{cancel}
+\usepackage{amsmath}
+%green color
+\definecolor{main1}{RGB}{210,168,75}
+\definecolor{seco1}{RGB}{9,80,3}
+\definecolor{thid1}{RGB}{0,175,152}
+%cyan color
+\definecolor{main2}{RGB}{239,126,30}
+\definecolor{seco2}{RGB}{0,175,152}
+\definecolor{thid2}{RGB}{236,74,53}
+%cyan color
+\definecolor{main3}{RGB}{127,191,51}
+\definecolor{seco3}{RGB}{0,145,215}
+\definecolor{thid3}{RGB}{180,27,131}
+
+%  ---自定义命令区--- %
+% 破折号
+\newcommand{\pozhehao}{\kern0.2em\rule[0.8ex]{1.6em}{0.1ex}\kern0.2em}
+\newcommand{\xiaopozhe}{\kern0.2em\rule[0.8ex]{0.6em}{0.1ex}\kern0.2em}
+% 星号
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{shapes.geometric}
+\newcommand{\Stars}[2][fill=yellow,draw=orange]{\begin{tikzpicture}[baseline=-0.35em,#1]
+\foreach \X in {1,...,5}
+{\pgfmathsetmacro{\xfill}{min(1,max(1+#2-\X,0))}
+\path (\X*1.1em,0) 
+node[star,draw,star point height=0.25em,minimum size=1em,inner sep=0pt,
+path picture={\fill (path picture bounding box.south west) 
+rectangle  ([xshift=\xfill*1em]path picture bounding box.north west);}]{};
+}
+\end{tikzpicture}}
+% 选择题 \choice{#1}{#2} #1=1选项为答案、#2=[A/B/C/D]为序号
+\newcommand{\choice}[2]{
+    \if #1==\textcolor{white}{0}
+        \colorbox{black!30}{\textcolor{white}{#2}}
+    \else
+        \colorbox{cyan!50}{\textcolor{white}{#2}}
+    \fi
+}
+% 填空题
+\newcommand{\sol}[1]{
+    \colorbox{cyan!50}{[#1]}
+}
+\newcommand{\diff}{\mathrm{d}}
+% latexdiff
+%DIF PREAMBLE EXTENSION ADDED BY LATEXDIFF
+%DIF UNDERLINE PREAMBLE %DIF PREAMBLE
+\RequirePackage[normalem]{ulem} %DIF PREAMBLE
+\RequirePackage{color}\definecolor{RED}{rgb}{1,0,0}\definecolor{BLUE}{rgb}{0,0,1} %DIF PREAMBLE
+\providecommand{\DIFadd}[1]{{\protect\color{blue}\uwave{#1}}} %DIF PREAMBLE
+\providecommand{\DIFdel}[1]{{\protect\color{red}\sout{#1}}}                      %DIF PREAMBLE
+%DIF SAFE PREAMBLE %DIF PREAMBLE
+\providecommand{\DIFaddbegin}{} %DIF PREAMBLE
+\providecommand{\DIFaddend}{} %DIF PREAMBLE
+\providecommand{\DIFdelbegin}{} %DIF PREAMBLE
+\providecommand{\DIFdelend}{} %DIF PREAMBLE
+%DIF FLOATSAFE PREAMBLE %DIF PREAMBLE
+\providecommand{\DIFaddFL}[1]{\DIFadd{#1}} %DIF PREAMBLE
+\providecommand{\DIFdelFL}[1]{\DIFdel{#1}} %DIF PREAMBLE
+\providecommand{\DIFaddbeginFL}{} %DIF PREAMBLE
+\providecommand{\DIFaddendFL}{} %DIF PREAMBLE
+\providecommand{\DIFdelbeginFL}{} %DIF PREAMBLE
+\providecommand{\DIFdelendFL}{} %DIF PREAMBLE
+%DIF END PREAMBLE EXTENSION ADDED BY LATEXDIFF
+
+% 算法环境
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+\renewcommand{\algorithmcfname}{算法}
+\SetKwInOut{KIN}{输入}
+\SetKwInOut{KOUT}{输出}
+\renewcommand{\thealgocf}{\thesection.\arabic{algocf}} %<---细节与重点（实现连字符编号）
+\DontPrintSemicolon 

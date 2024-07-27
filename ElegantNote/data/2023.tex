@@ -1,0 +1,225 @@
+\section{2023春考试题目}
+% 第一题
+\begin{example}
+    已知$f(1)=5,f^{\prime}(1)=7,f^{\prime}(0)=1$ ,试问满足上插值述条件的多项式是否适定？若不适定请说明理由；若适定，则求出该多项式并给出误差估计.\Stars{5}
+\end{example}
+\begin{solution}
+    设插值多项式$p(x) = a_0+a_1x+a_2x^2$满足题述条件，那么有
+    \[
+        \left\{
+            \begin{array}{l}
+                a_0+a_1+a_2 = 5\\
+                a_1+2a_2 = 7\\
+                a_1 = 1
+            \end{array}
+        \right.
+    \]
+    解得$a_0 = 1,\,a_1 = 1,\,a_2 = 3$，方程组有唯一解，插值多项式适定。
+    
+    设插值误差为$R(x)$，并做$\varphi(t) = f(t)-p(t)-W(t)$满足$\varphi(x) = 0$，即
+    \[
+        W(x) =  R(x) 
+    \]
+    
+    因为$R(x)$满足$R(1) = R'(1) = 0$，故而设$W(t) = (mt+n)(t-1)^2$，由$W'(0) = 0$可得
+    \[
+        m(0-1)^2+(m\cdot 0+n)\cdot 2\cdot (0-1) = 0
+    \]
+    解得$m = 2n$
+
+    两次利用罗尔定理可得
+    \[
+        \varphi'''(\xi) = f'''(\xi)- 3!m = 0
+    \]
+    解得$m = \dfrac{f'''(\xi)}{6}$。故而
+    \[
+        R(x) = \frac{f'''(\xi)}{12}(x-1)^2(2x+1)
+    \]
+\end{solution}
+% 第二题
+\begin{example}
+    设$f(x)=0$有单根$x^*$，$x=\varphi(x)$是$f(x)=0$的等价方程，若$\varphi(x)=x-m(x)f(x)$,且所有函数都充分光滑。证明：当$m(x^*)\neq\frac1{f^{\prime}(x^*)}$时， $x_{k+1}=\varphi(x_k)$至多是一阶收敛的；当$m(x^*)=\frac1{f^{\prime}(x^*)}$时，$x_{k+1}=\varphi(x_k)$至少是二阶收敛的。\Stars{5}
+\end{example}
+\begin{proof}
+    % 容易知道
+    % \[
+    %     \begin{array}{l}
+    %         x^{*} = \varphi(x^{*}) = x^*-m(x^*)f(x^*) \\
+    %         x_{k+1} = \varphi(x_{k}) = x_{k}-m(x)f(x)
+    %     \end{array}
+    % \]
+    % $\varphi(x_{k}$)在$x^*$处的泰勒展开为
+    % \[
+    %     x_{k+1} = \varphi(x^*) + \varphi'(x^*)(x_{k}-x^*)+\frac{\varphi''(x^*)}{2}(x_{k}-x^*)^2+\cdots
+    % \]
+    % 有
+    % \[
+    %     \begin{aligned}
+    %         \frac{|x_{k+1}-x^{*}|}{|x_{k}-x^{*}|} &= \frac{|\varphi(x^*)-\varphi(x^*) - \varphi'(x^*)(x_{k}-x^*)-\frac{\varphi''(x^*)}{2}(x_{k}-x^*)^2+\cdots|}{|x_{k}-x^{*}|}\\
+    %         &= \left|\varphi'(x^*) + \frac{\varphi''(x^*)}{2}(x_{k}-x^*)+\cdots\right|
+    %     \end{aligned}
+    % \]
+    % $\varphi'(x^*)$为
+    % \[
+    %     \varphi'(x^*) = 1-m'(x^*)f(x^*)-m(x^*)f'(x^*)
+    % \]
+    % 当$m(x^*)\neq\frac1{f^{\prime}(x^*)}$时，
+    % \[
+    %     \varphi'(x^*) = 1-m'(x^*)f(x^*)-m(x^*)f'(x^*) =1-m(x^*)f'(x^*) \neq 0
+    % \]
+    % 则
+    % \[
+    %     \begin{aligned}
+    %         \frac{|x_{k+1}-x^{*}|}{|x_{k}-x^{*}|} = \left|\varphi'(x^*) + \frac{\varphi''(x^*)}{2}(x_{k}-x^*)+\cdots\right| \to \left| \varphi'(x^*)  \right|,(k\to \infty)
+    %     \end{aligned}
+    % \]
+    % 当$m(x^*)\neq\frac1{f^{\prime}(x^*)}$时， $x_{k+1}=\varphi(x_k)$至多是一阶收敛的；
+    % \newline
+    % 当$m(x^*)=\frac1{f^{\prime}(x^*)}$时，
+    % \[
+    %     \varphi'(x^*) = 1-m'(x^*)f(x^*)-m(x^*)f'(x^*) = 0
+    % \]
+    % 则
+    % \[
+    %     \begin{aligned}
+    %         \frac{|x_{k+1}-x^{*}|}{|x_{k}-x^{*}|^2} = \left|\frac{\varphi''(x^*)}{2}+\frac{\varphi'''(x^*)}{3!}(x_{k}-x^*)+\cdots\right| \to \left| \frac{\varphi''(x^*)}{2} \right|,(k\to \infty)
+    %     \end{aligned}
+    % \]
+    % 当$m(x^*)=\frac1{f^{\prime}(x^*)}$时，$x_k+1=\varphi(x_k)$至少是二阶收敛的
+    由$x^*$是$f(x) = 0$的单根，有
+    \[
+        f(x^*) = 0,\,f'(x^*)\neq 0
+    \]
+    由$\varphi(x) = x-m(x)f(x)$，有
+    \[
+        \begin{array}{c}
+            \varphi'(x) = 1-m'(x)f(x)-m(x)f'(x)\\
+            \varphi'(x^*) = 1-m'(x)^*f(x^*)-m(x^*)f'(x^*) = 1-m(x^*)f'(x^*)           
+        \end{array}
+    \]
+    由迭代阶的定理，当$m(x^*)\neq 1/f'(x^*)$时，$\varphi'(x^*) = 1-m(x^*)f'(x^*) \neq 0$.此时若$|\varphi'(x^*)|<1$，则迭代法$x_{k+1}=\varphi(x_k)$一阶收敛；若$|\varphi'(x^*)|\geq 1$，则迭代法$x_{k+1}=\varphi(x_k)$不收敛；故迭代法是最多是一阶收敛的。
+
+    $m(x^*)= 1/f'(x^*)$时，$\varphi'(x^*) = 1-m(x^*)f'(x^*) = 0$.此时则迭代法$x_{k+1}=\varphi(x_k)$至少是二阶收敛的.
+\end{proof}
+% 第三题
+\begin{example}
+    对下列线性代数方程组给出使 Jacobi 迭代法和 Gauss-Seidel 迭代法均收敛的迭代格式，要求分别写出这两个迭代格式，并说明迭代法收敛的理由。\Stars{5}
+    \[
+        \left\{
+            \begin{array}{l}
+                2x_1-x_2+x_4=1\\
+                x_1-x_3+5x_4=6\\
+                x_2+4x_3-x_4=8\\
+                -x_1+3x_2-x_3=3
+            \end{array}
+        \right.
+    \]
+\end{example}
+
+\begin{solution}
+    \[
+        \begin{bmatrix}
+            \boldsymbol{A} \mid \boldsymbol{b}
+        \end{bmatrix}=
+        \begin{bmatrix}
+            2&-1&0&1&1\\1&0&-1&5&6\\0&1&4&-1&8\\-1&3&-1&0&3
+        \end{bmatrix}
+        \xrightarrow{\stackrel{r_2\leftrightarrow r_4}{r_1\times 10+r_2}}
+        \begin{bmatrix}
+            19&-7&-1&10&10\\-1&3&-1&0&3\\0&1&4&-1&8\\1&0&-1&5&6
+        \end{bmatrix}
+    \]
+    因其变化后为等价方程组，且严格对角占优，故而Jacobi 迭代法和 Gauss-Seidel 迭代法均收敛。
+
+    Jacobi 迭代格式为：
+    \[
+        \begin{aligned}
+            \begin{cases}
+                x_1^{(m+1)}=\frac{1}{19}(7x_2^{(m)}+x_3^{(m)}-10x_4^{(m)}+10)\\
+                x_2^{(m+1)}=\frac{1}{3}(x_1^{(m)}+x_3^{(m)}+3)\\
+                x_3^{(m+1)}=\frac{1}{4}(-x_2^{(m)}+x_4^{(m)}+8)\\
+                x_4^{(m+1)}=\frac{1}{5}(-x_1^{(m)}+x_3^{(m)}+6)
+            \end{cases}
+            & (m=0,1,2,\cdots)
+        \end{aligned}  
+    \]
+    Gauss-Seidel迭代格式：
+    \[
+        \begin{aligned}
+            \begin{cases}
+                x_1^{(m+1)}=\frac{1}{19}(7x_2^{(m)}+x_3^{(m)}-10x_4^{(m)}+10)\\
+                x_2^{(m+1)}=\frac{1}{3}(x_1^{(m+1)}+x_3^{(m)}+3)\\
+                x_3^{(m+1)}=\frac{1}{4}(-x_2^{(m+1)}+x_4^{(m)}+8)\\
+                x_4^{(m+1)}=\frac{1}{5}(-x_1^{(m+1)}+x_3^{(m+1)}+6)
+            \end{cases}
+            & (m=0,1,2,\cdots)
+        \end{aligned}  
+    \]
+\end{solution}
+% 第四题
+\begin{example}
+    求$f\left(x\right)=3x^3+2x^2+x$在区间$\left[-1,1\right]$上的2次最佳一致逼近多项式。\Stars{5}
+\end{example}
+\begin{solution}
+    切比雪夫多项式为
+    \[
+        \begin{array}{l}
+            T_{0}(x) = 1\\
+            T_{1}(x) = x\\
+            T_{2}(x) = 2x^2-1\\
+            T_{3}(x) = 2xT_{2}(x)-T_{1}(x) = 4x^3-3x
+        \end{array}
+    \]
+    有
+    \[
+        \begin{array}{l}
+            \dfrac{f(x)-p(x)}{3} = \dfrac{T_{3}(x)}{4}\\
+            \Rightarrow p(x) = 2x^2+\dfrac{13}{4}x
+        \end{array}
+    \]
+\end{solution}
+% 第五题
+\begin{example}
+    已知$f(-1)=1,f(-0.5)=4,f(0)=6,f(0.5)=9,f(1)=2,$且$\mid f^{(4)}(x)\mid\leq M(\forall x\in[-1,1])$,$M$为常数,试估计用复合 Simpson 公式计算积分$\int_{-1}^{1}f(x)\diff x$的整体截断误差限.\Stars{5}
+\end{example}
+\begin{solution}
+    因为
+    \[
+        \begin{aligned}
+            \int_{-1}^{1}f(x)dx& =\int_{-1}^{0}f(x)\diff x+\int_{0}^{1}f(x)\diff x  \\
+            &\approx[\frac{1}{6}f(-1)+\frac{4}{6}f(-0.5)+\frac{1}{6}f(0)]+[\frac{1}{6}f(0)+\frac{4}{6}f(0.5)+\frac{1}{6}f(1)]\\
+            &\approx \frac{1}{6}[1+4\times4+6+6+4\times9+2]=\frac{67}{6}\approx 11.1667
+        \end{aligned}
+    \]
+    误差
+    \[
+        \begin{aligned}
+            \left|I-S_{2}\right| & \leq\left|\int_{-1}^{0}\frac{f^{(4)}(\xi_{1})}{4!}(x+1)(x+0.5)^{2}(x-0)\diff x\right|+\left|\int_{0}^{1}\frac{f^{(4)}(\xi_{2})}{4!}(x-0)(x-0.5)^{2}(x-1)\diff x\right|\\
+            &\leq \frac{M}{24}\left[ \int_{-1}^{0}\Bigl|(x+1)(x+0.5)^{2}(x-0)\Bigr|\diff x+\int_{0}\Bigl|(x-0)(x-0.5)^{2}(x-1)\Bigr|\diff x \right]\\
+            &\leq \frac{M}{12}\int_{0}^{1}\Bigl|(x-0)(x-0.5)^{2}(x-1)\Bigr|\diff x=\frac{M}{6}\int_{0}^{0.5}t^{2}(0.25-t^{2})\diff t=\frac{M}{6}\times0.0042\\
+            & \leq 0.008M 
+        \end{aligned}
+    \]
+\end{solution}
+% 第六题
+\begin{example}
+    设$n$阶实矩阵$A$的特征值满足：$\lambda_1=\lambda_2,\lambda_1>|\lambda_3|\geq\cdots\geq|\lambda_n|$，试讨论用幂法如何求主特征值，并分析收敛性.
+\end{example}
+% 第八题
+\begin{example}
+    设多元函数$G:D\subset\mathbb{R}^n\to\mathbb{R}^n,\forall \boldsymbol{x},\boldsymbol{y}\in D_0\subset D$都有$\|G(\boldsymbol{x})-G(\boldsymbol{y})\|\leq\|\boldsymbol{x}-\boldsymbol{y}\|$,则称$G$在$D_0$为非膨胀映射，若当$\boldsymbol{x}\neq \boldsymbol{y}$时不等式严格成立，则称$G$在$D_0$为严格非膨胀映射.
+
+    假定$G{:}D\subset\mathbb{R}^n\to\mathbb{R}^n$,在有界闭集$D_0\subset D$上是严格非膨胀映射，且$G(D_0)\subset D_0$,证明$G$在$D_0$中有唯一不动点.\Stars{5}
+\end{example}
+\begin{proof}
+    设$\varphi(\boldsymbol{x}) = \|\boldsymbol{x}-\boldsymbol{G}(\boldsymbol{x})\|$
+    
+    显然，设$\varphi(\boldsymbol{x}) = \|\boldsymbol{x}-\boldsymbol{G}(\boldsymbol{x})\|$在$D_0$上连续，而$D_0$为闭集，故$\varphi(\boldsymbol{x})$在$D_0$上有最小值，记为$\varphi(\boldsymbol{x}^*) = \min\limits_{\boldsymbol{x}\in D_0}\|\boldsymbol{x}-\boldsymbol{G}(\boldsymbol{x})\|$
+
+    若$\boldsymbol{G}(\boldsymbol{x}^*)\neq \boldsymbol{x}^*$，则有
+    \[
+        \varphi(\boldsymbol{G}(\boldsymbol{x}^*)) = \|\boldsymbol{G}(\boldsymbol{x}^*)-\boldsymbol{G}(\boldsymbol{G}(\boldsymbol{x}^*))\|<\|\boldsymbol{x}^*-\boldsymbol{G}(\boldsymbol{x}^*)\|
+    \]矛盾！
+    
+    所以必有$\boldsymbol{G}(\boldsymbol{x}^*) = \boldsymbol{x}^*$。
+\end{proof}
